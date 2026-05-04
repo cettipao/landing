@@ -336,6 +336,6 @@ export const certifications: CertEntry[] = [
   {
     title: { en: "First Certificate in English (B2)", es: "First Certificate in English (B2)" },
     issuer: "Cambridge",
-    year: "—",
+    year: "2019",
   },
 ];
