@@ -1,0 +1,101 @@
+---
+import ParticleNetwork from "@/components/hero/ParticleNetwork.tsx";
+import RevealHeading from "@/components/hero/RevealHeading.tsx";
+import MagneticButton from "@/components/ui/MagneticButton.tsx";
+import { hero } from "@/data/portfolio";
+import { useTranslations, type Locale, localizePath } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const home = localizePath("/", locale);
+---
+
+<section
+  id="hero"
+  class="relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden flex items-center"
+>
+  <ParticleNetwork client:idle />
+
+  <div class="container-content relative z-10 py-20 md:py-32">
+    <p class="font-mono text-sm md:text-base text-accent mb-6 tracking-tight">
+      {hero.preTitle}
+    </p>
+
+    <RevealHeading
+      client:load
+      text={hero.name}
+      className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-balance"
+    />
+
+    <p
+      class="mt-6 max-w-2xl text-lg md:text-xl text-text-secondary text-balance leading-relaxed"
+    >
+      {hero.tagline[locale]}
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <MagneticButton client:visible href={`${home === "/" ? "" : home}/#contact`} variant="primary">
+        {hero.ctaPrimary[locale]}
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
+        </svg>
+      </MagneticButton>
+
+      <MagneticButton
+        client:visible
+        href={`${home === "/" ? "" : home}/#projects`}
+        variant="secondary"
+      >
+        {hero.ctaSecondary[locale]}
+      </MagneticButton>
+    </div>
+  </div>
+
+  <a
+    href="#about"
+    aria-label={t("hero.scrollHint")}
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-text-tertiary hover:text-accent transition-colors"
+  >
+    <span class="font-mono text-[0.7rem] uppercase tracking-[0.2em]">
+      {t("hero.scrollHint")}
+    </span>
+    <span class="block w-px h-12 bg-gradient-to-b from-text-tertiary to-transparent overflow-hidden">
+      <span class="block w-full h-1/2 bg-accent animate-scroll-cue"></span>
+    </span>
+  </a>
+</section>
+
+<style>
+  @keyframes scroll-cue {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(200%);
+    }
+  }
+  .animate-scroll-cue {
+    animation: scroll-cue 1.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-scroll-cue {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import "@fontsource-variable/geist";
+import "@fontsource-variable/jetbrains-mono";
+import "@/styles/global.css";
+
+import Navbar from "@/components/Navbar.astro";
+import Footer from "@/components/Footer.astro";
+import CustomCursor from "@/components/ui/CustomCursor.tsx";
+import { useTranslations, type Locale } from "@/i18n/ui";
+import { SITE_URL } from "@/lib/utils";
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: Locale;
+  ogImage?: string;
+  noindex?: boolean;
+}
+
+const { locale = "en", title, description, ogImage, noindex = false } = Astro.props;
+const t = useTranslations(locale);
+
+const pageTitle = title ?? t("site.title");
+const pageDescription = description ?? t("site.description");
+const canonical = new URL(Astro.url.pathname, SITE_URL).toString();
+const ogImageUrl = new URL(ogImage ?? "/og-image.png", SITE_URL).toString();
+const ogAlt = t("site.ogAlt");
+---
+
+<!doctype html>
+<html lang={locale} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogAlt} />
+    <meta property="og:locale" content={locale === "es" ? "es_AR" : "en_US"} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Alternate languages -->
+    <link rel="alternate" hreflang="en" href={new URL("/", SITE_URL).toString()} />
+    <link rel="alternate" hreflang="es" href={new URL("/es", SITE_URL).toString()} />
+    <link rel="alternate" hreflang="x-default" href={new URL("/", SITE_URL).toString()} />
+
+    <!-- Schema.org Person -->
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Person",
+        name: "Paolo Cetti",
+        jobTitle: "Backend & Cloud Engineer",
+        url: SITE_URL,
+        sameAs: [
+          "https://www.linkedin.com/in/cettipao",
+          "https://github.com/cettipao",
+        ],
+      })}
+    />
+  </head>
+  <body class="bg-bg-primary text-text-primary font-sans antialiased min-h-dvh flex flex-col">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-3 focus:py-2 focus:rounded focus:bg-accent focus:text-bg-primary"
+    >
+      {t("nav.skipToContent")}
+    </a>
+
+    <Navbar locale={locale} />
+
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+
+    <Footer locale={locale} />
+
+    <CustomCursor client:idle />
+  </body>
+</html>

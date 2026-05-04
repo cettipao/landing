@@ -1,0 +1,24 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Hero from "@/components/hero/Hero.astro";
+import About from "@/components/about/About.astro";
+import Experience from "@/components/experience/Experience.astro";
+import Projects from "@/components/projects/Projects.astro";
+import Stack from "@/components/stack/Stack.astro";
+import Education from "@/components/education/Education.astro";
+import BlogPreview from "@/components/blog/BlogPreview.astro";
+import Contact from "@/components/contact/Contact.astro";
+
+const locale = "es" as const;
+---
+
+<BaseLayout locale={locale}>
+  <Hero locale={locale} />
+  <About locale={locale} />
+  <Experience locale={locale} />
+  <Projects locale={locale} />
+  <Stack locale={locale} />
+  <Education locale={locale} />
+  <BlogPreview locale={locale} />
+  <Contact locale={locale} />
+</BaseLayout>

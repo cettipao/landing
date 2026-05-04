@@ -1,0 +1,23 @@
+---
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import StackGrid from "@/components/stack/StackGrid.tsx";
+import { stack } from "@/data/portfolio";
+import { useTranslations, type Locale } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section
+  id="stack"
+  class="py-24 md:py-32 border-t border-border bg-bg-secondary/40 scroll-mt-24"
+>
+  <div class="container-content">
+    <SectionHeading kicker={t("stack.kicker")} title={t("sections.stack")} />
+    <StackGrid client:visible categories={stack} locale={locale} />
+  </div>
+</section>

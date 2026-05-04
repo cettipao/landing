@@ -1,0 +1,31 @@
+---
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import Timeline from "@/components/experience/Timeline.tsx";
+import { experience } from "@/data/portfolio";
+import { useTranslations, type Locale } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section
+  id="experience"
+  class="py-24 md:py-32 border-t border-border bg-bg-secondary/40 scroll-mt-24"
+>
+  <div class="container-content">
+    <SectionHeading
+      kicker={t("experience.kicker")}
+      title={t("sections.experience")}
+    />
+    <Timeline
+      client:visible
+      entries={experience}
+      locale={locale}
+      currentLabel={t("experience.currentBadge")}
+    />
+  </div>
+</section>

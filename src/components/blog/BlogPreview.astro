@@ -1,0 +1,74 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import RevealOnScroll from "@/components/ui/RevealOnScroll.tsx";
+import { useTranslations, type Locale, localizePath } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const all = await getCollection("blog", ({ data }) => !data.draft);
+const posts = all
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 3);
+
+const blogIndex = `${localizePath("/", locale).replace(/\/$/, "")}/blog`;
+---
+
+<section
+  id="blog"
+  class="py-24 md:py-32 border-t border-border bg-bg-secondary/40 scroll-mt-24"
+>
+  <div class="container-content">
+    <SectionHeading kicker={t("blog.kicker")} title={t("sections.blog")} />
+
+    {
+      posts.length === 0 ? (
+        <RevealOnScroll client:visible>
+          <div class="rounded-lg border border-dashed border-border bg-bg-tertiary/30 p-10 text-center">
+            <p class="font-mono text-sm text-accent">// soon</p>
+            <p class="mt-3 text-text-secondary text-balance max-w-md mx-auto">
+              {t("blog.placeholder")}
+            </p>
+          </div>
+        </RevealOnScroll>
+      ) : (
+        <ul class="space-y-4">
+          {posts.map((post) => (
+            <li>
+              <a
+                href={`${blogIndex}/${post.id}`}
+                class="group flex items-start justify-between gap-6 rounded-lg border border-border bg-bg-tertiary/40 p-5 hover:border-accent/40 transition-colors"
+              >
+                <div>
+                  <p class="font-mono text-xs text-text-tertiary">
+                    {post.data.publishedAt.toISOString().slice(0, 10)}
+                  </p>
+                  <h3 class="mt-1 text-lg font-medium group-hover:text-accent transition-colors">
+                    {post.data.title}
+                  </h3>
+                  <p class="mt-2 text-sm text-text-secondary">
+                    {post.data.description}
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="mt-8">
+      <a
+        href={blogIndex}
+        class="font-mono text-sm text-text-secondary hover:text-accent transition-colors inline-flex items-center gap-2"
+      >
+        {t("blog.viewAll")} <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</section>

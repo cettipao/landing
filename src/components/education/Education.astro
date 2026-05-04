@@ -1,0 +1,74 @@
+---
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import RevealOnScroll from "@/components/ui/RevealOnScroll.tsx";
+import { education, certifications } from "@/data/portfolio";
+import { useTranslations, type Locale } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+---
+
+<section
+  id="education"
+  class="container-content py-24 md:py-32 border-t border-border scroll-mt-24"
+>
+  <SectionHeading
+    kicker={t("education.kicker")}
+    title={t("sections.education")}
+  />
+
+  <div class="grid gap-12 md:grid-cols-2 md:gap-16">
+    <RevealOnScroll client:visible>
+      <article
+        class="rounded-lg border border-border bg-bg-tertiary/40 p-6 md:p-7 h-full"
+      >
+        <p class="font-mono text-xs text-text-tertiary">
+          {education.period[locale]}
+        </p>
+        <h3 class="mt-2 text-xl font-semibold tracking-tight">
+          {education.school}
+        </h3>
+        <p class="mt-1 text-text-secondary">{education.degree[locale]}</p>
+        <ul class="mt-5 space-y-2 text-sm text-text-secondary">
+          {
+            education.highlights[locale].map((h) => (
+              <li class="leading-relaxed flex gap-2">
+                <span aria-hidden="true" class="text-accent shrink-0">▸</span>
+                <span>{h}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+    </RevealOnScroll>
+
+    <RevealOnScroll client:visible delay={0.1}>
+      <article
+        class="rounded-lg border border-border bg-bg-tertiary/40 p-6 md:p-7 h-full"
+      >
+        <h3 class="text-xl font-semibold tracking-tight">
+          {t("education.certifications")}
+        </h3>
+        <ul class="mt-5 divide-y divide-border">
+          {
+            certifications.map((cert) => (
+              <li class="py-3 first:pt-0 last:pb-0 flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-sm text-text-primary">{cert.title[locale]}</p>
+                  <p class="text-xs text-text-tertiary mt-0.5">{cert.issuer}</p>
+                </div>
+                <span class="font-mono text-xs text-text-tertiary shrink-0">
+                  {cert.year}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+    </RevealOnScroll>
+  </div>
+</section>

@@ -1,0 +1,70 @@
+---
+import { useTranslations, type Locale } from "@/i18n/ui";
+import { SOCIAL } from "@/lib/utils";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+const year = new Date().getFullYear();
+---
+
+<!-- hey curious dev! 👋 source code at github.com/cettipao/portfolio -->
+<footer class="border-t border-border mt-24">
+  <div class="container-content py-10 flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+    <div class="flex flex-col gap-1">
+      <p class="font-mono text-sm text-text-secondary">
+        {t("footer.rights", { year })}
+      </p>
+      <p class="text-xs text-text-tertiary">{t("footer.stack")}</p>
+    </div>
+
+    <div class="flex items-center gap-4 text-sm">
+      <a
+        href={`mailto:${SOCIAL.email}`}
+        class="text-text-secondary hover:text-accent transition-colors"
+      >
+        Email
+      </a>
+      <a
+        href={SOCIAL.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-text-secondary hover:text-accent transition-colors"
+      >
+        GitHub
+      </a>
+      <a
+        href={SOCIAL.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-text-secondary hover:text-accent transition-colors"
+      >
+        LinkedIn
+      </a>
+    </div>
+  </div>
+
+  <div class="container-content pb-8">
+    <p class="font-mono text-xs text-text-tertiary">— {t("footer.tagline")}</p>
+  </div>
+</footer>
+
+<script is:inline>
+  // Console easter egg
+  (() => {
+    if (typeof window === "undefined") return;
+    if (window.__pcWelcome) return;
+    window.__pcWelcome = true;
+    console.log(
+      "%cPaolo Cetti",
+      "color: #3b82f6; font-size: 24px; font-weight: 700;",
+    );
+    console.log(
+      "%clooking around? let's chat: cettipao@gmail.com",
+      "color: #a3a3a3; font-size: 12px;",
+    );
+  })();
+</script>

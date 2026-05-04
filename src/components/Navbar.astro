@@ -1,0 +1,139 @@
+---
+import LanguageSwitcher from "@/components/LanguageSwitcher.tsx";
+import { useTranslations, localizePath, type Locale } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const homePath = localizePath("/", locale);
+const basePrefix = homePath === "/" ? "" : homePath;
+
+const navLinks: Array<{ href: string; label: string; key: string }> = [
+  { key: "about", href: `${basePrefix}/#about`, label: t("nav.about") },
+  { key: "experience", href: `${basePrefix}/#experience`, label: t("nav.experience") },
+  { key: "projects", href: `${basePrefix}/#projects`, label: t("nav.projects") },
+  { key: "stack", href: `${basePrefix}/#stack`, label: t("nav.stack") },
+  { key: "blog", href: `${basePrefix}/blog`, label: t("nav.blog") },
+  { key: "contact", href: `${basePrefix}/#contact`, label: t("nav.contact") },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header
+  id="site-header"
+  data-scrolled="false"
+  class="fixed inset-x-0 top-0 z-40 transition-all duration-200 border-b border-transparent"
+>
+  <div class="container-content flex items-center justify-between h-16 md:h-20">
+    <a
+      href={homePath}
+      class="font-mono text-md text-text-primary hover:text-accent transition-colors"
+      aria-label="Paolo Cetti — home"
+    >
+      <span class="text-accent">pc</span><span>.</span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-7" aria-label="Primary">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="text-sm text-text-secondary hover:text-text-primary transition-colors"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <LanguageSwitcher
+        client:load
+        locale={locale}
+        currentPath={currentPath}
+      />
+
+      <button
+        type="button"
+        id="nav-toggle"
+        class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded border border-border text-text-secondary hover:text-text-primary hover:border-accent transition-colors"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        aria-label={t("nav.openMenu")}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <line x1="4" y1="7" x2="20" y2="7" />
+          <line x1="4" y1="12" x2="20" y2="12" />
+          <line x1="4" y1="17" x2="20" y2="17" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-border bg-bg-primary/95 backdrop-blur"
+  >
+    <nav class="container-content flex flex-col gap-1 py-4" aria-label="Mobile">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="block py-2 text-text-secondary hover:text-text-primary transition-colors"
+            data-mobile-link
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>
+
+<div aria-hidden="true" class="h-16 md:h-20"></div>
+
+<script>
+  const header = document.getElementById("site-header");
+  const onScroll = () => {
+    if (!header) return;
+    const scrolled = window.scrollY > 50;
+    header.dataset["scrolled"] = String(scrolled);
+    header.classList.toggle("backdrop-blur", scrolled);
+    header.classList.toggle("bg-bg-primary/70", scrolled);
+    header.classList.toggle("border-border", scrolled);
+    header.classList.toggle("border-transparent", !scrolled);
+  };
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  const toggle = document.getElementById("nav-toggle");
+  const menu = document.getElementById("mobile-menu");
+  if (toggle && menu) {
+    toggle.addEventListener("click", () => {
+      const open = menu.classList.toggle("hidden") === false;
+      toggle.setAttribute("aria-expanded", String(open));
+    });
+    menu.querySelectorAll<HTMLAnchorElement>("[data-mobile-link]").forEach((a) => {
+      a.addEventListener("click", () => {
+        menu.classList.add("hidden");
+        toggle.setAttribute("aria-expanded", "false");
+      });
+    });
+  }
+</script>

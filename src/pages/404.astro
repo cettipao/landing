@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="404 — Lost node" noindex>
+  <section class="container-content py-32 text-center">
+    <p class="font-mono text-sm text-accent">// 404</p>
+    <h1 class="mt-4 text-4xl md:text-5xl font-semibold">Lost node</h1>
+    <p class="mt-4 text-text-secondary max-w-md mx-auto">
+      This page is a node that drifted out of the graph. Let's get you back to
+      the network.
+    </p>
+    <a
+      href="/"
+      class="mt-8 inline-block rounded border border-accent px-5 py-2 font-mono text-sm text-accent hover:bg-accent hover:text-bg-primary transition-colors"
+    >
+      ← back to home
+    </a>
+  </section>
+</BaseLayout>

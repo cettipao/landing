@@ -1,0 +1,90 @@
+{
+  "site": {
+    "title": "Paolo Cetti — Backend & Cloud Engineer",
+    "description": "Backend & Cloud Engineer building scalable backends and serverless architectures on AWS. Based in Córdoba, Argentina.",
+    "ogAlt": "Paolo Cetti — Backend & Cloud Engineer"
+  },
+  "nav": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "stack": "Stack",
+    "blog": "Blog",
+    "contact": "Contact",
+    "skipToContent": "Skip to content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "switchToSpanish": "Cambiar a español",
+    "switchToEnglish": "Switch to English"
+  },
+  "hero": {
+    "preTitle": "// backend & cloud engineer",
+    "tagline": "Building scalable backends and serverless architectures on AWS.",
+    "ctaPrimary": "Get in touch",
+    "ctaSecondary": "View projects",
+    "scrollHint": "Scroll"
+  },
+  "sections": {
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "stack": "Stack",
+    "education": "Education & Certifications",
+    "blog": "Latest writing",
+    "contact": "Let's talk"
+  },
+  "about": {
+    "kicker": "// who i am",
+    "photoAlt": "Paolo Cetti"
+  },
+  "experience": {
+    "kicker": "// where i've worked",
+    "currentBadge": "Current",
+    "viewMore": "View more"
+  },
+  "projects": {
+    "kicker": "// selected work",
+    "viewRepo": "Repository",
+    "viewDemo": "Demo",
+    "viewCaseStudy": "Case study",
+    "githubHeading": "More on GitHub",
+    "githubDescription": "Top-starred public repos and last-year contribution activity, pulled from the GitHub API at build time.",
+    "contributionsTotal": "Contributions in the last year",
+    "contributionsLess": "Less",
+    "contributionsMore": "More"
+  },
+  "stack": {
+    "kicker": "// tools of the trade"
+  },
+  "education": {
+    "kicker": "// education",
+    "certifications": "Certifications"
+  },
+  "blog": {
+    "kicker": "// thoughts",
+    "placeholder": "Writing soon — first article on its way.",
+    "viewAll": "Read all posts"
+  },
+  "contact": {
+    "kicker": "// contact",
+    "leadIn": "Open to backend, cloud and AI engineering roles. Always up for a good conversation.",
+    "emailLabel": "Email",
+    "linkedinLabel": "LinkedIn",
+    "githubLabel": "GitHub",
+    "cvLabel": "Download CV",
+    "calendlyLabel": "Schedule a call"
+  },
+  "footer": {
+    "tagline": "Built with care from Córdoba",
+    "rights": "© {year} Paolo Cetti",
+    "stack": "Built with Astro · Deployed on GitHub Pages"
+  },
+  "common": {
+    "viewMore": "View more",
+    "viewAll": "View all",
+    "downloadCv": "Download CV",
+    "copyEmail": "Copy email",
+    "emailCopied": "Email copied!",
+    "openExternal": "Open in new tab"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "name": "paolocetti-portfolio",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Personal portfolio of Paolo Cetti — Backend & Cloud Engineer.",
+  "homepage": "https://paolocetti.com",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=20.18.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "typecheck": "tsc --noEmit",
+    "og": "node scripts/generate-og.mjs",
+    "cutout": "node scripts/remove-bg.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.2.4",
+    "@astrojs/react": "^4.2.4",
+    "@astrojs/sitemap": "^3.2.1",
+    "@fontsource-variable/geist": "^5.2.5",
+    "@fontsource-variable/jetbrains-mono": "^5.2.5",
+    "@tailwindcss/vite": "^4.1.4",
+    "astro": "^5.7.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.38.0",
+    "lucide-react": "^0.501.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwindcss": "^4.1.4",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "sharp": "^0.34.5"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  }
+}

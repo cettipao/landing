@@ -1,0 +1,79 @@
+---
+import SectionHeading from "@/components/ui/SectionHeading.astro";
+import ProjectCard from "@/components/projects/ProjectCard.tsx";
+import GitHubRepos from "@/components/projects/GitHubRepos.tsx";
+import ContributionGraph from "@/components/projects/ContributionGraph.tsx";
+import { projects } from "@/data/portfolio";
+import { getFeaturedRepos, getContributions } from "@/lib/github";
+import { useTranslations, type Locale } from "@/i18n/ui";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = useTranslations(locale);
+
+const labels = {
+  repo: t("projects.viewRepo"),
+  demo: t("projects.viewDemo"),
+};
+
+// Build-time fetches — both gracefully degrade.
+const [repos, contributions] = await Promise.all([
+  getFeaturedRepos(),
+  getContributions(),
+]);
+
+const hasGitHubExtras = repos.length > 0 || contributions !== null;
+---
+
+<section
+  id="projects"
+  class="container-content py-24 md:py-32 border-t border-border scroll-mt-24"
+>
+  <SectionHeading kicker={t("projects.kicker")} title={t("sections.projects")} />
+
+  <div class="grid gap-6 md:grid-cols-2">
+    {
+      projects.map((project) => (
+        <ProjectCard
+          client:visible
+          project={project}
+          locale={locale}
+          labels={labels}
+        />
+      ))
+    }
+  </div>
+
+  {
+    hasGitHubExtras && (
+      <div class="mt-16">
+        <header class="flex flex-col gap-1 mb-6">
+          <h3 class="text-xl md:text-2xl font-semibold">
+            {t("projects.githubHeading")}
+          </h3>
+          <p class="text-sm text-text-tertiary max-w-2xl">
+            {t("projects.githubDescription")}
+          </p>
+        </header>
+
+        {contributions && (
+          <div class="mb-8">
+            <ContributionGraph
+              client:visible
+              calendar={contributions}
+              totalLabel={t("projects.contributionsTotal")}
+              lessLabel={t("projects.contributionsLess")}
+              moreLabel={t("projects.contributionsMore")}
+              locale={locale}
+            />
+          </div>
+        )}
+
+        {repos.length > 0 && <GitHubRepos client:visible repos={repos} />}
+      </div>
+    )
+  }
+</section>

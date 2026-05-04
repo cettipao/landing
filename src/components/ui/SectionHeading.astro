@@ -1,0 +1,25 @@
+---
+interface Props {
+  kicker?: string;
+  title: string;
+  align?: "left" | "center";
+}
+
+const { kicker, title, align = "left" } = Astro.props;
+---
+
+<header
+  class:list={[
+    "flex flex-col gap-3 mb-12 md:mb-16",
+    align === "center" ? "items-center text-center" : "items-start",
+  ]}
+>
+  {
+    kicker && (
+      <p class="font-mono text-xs md:text-sm text-accent tracking-tight">
+        {kicker}
+      </p>
+    )
+  }
+  <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">{title}</h2>
+</header>
