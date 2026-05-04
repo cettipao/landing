@@ -331,7 +331,7 @@ export const certifications: CertEntry[] = [
   {
     title: { en: "AWS Certified Cloud Practitioner", es: "AWS Certified Cloud Practitioner" },
     issuer: "Amazon Web Services",
-    year: "2024",
+    year: "2026",
   },
   {
     title: { en: "First Certificate in English (B2)", es: "First Certificate in English (B2)" },
