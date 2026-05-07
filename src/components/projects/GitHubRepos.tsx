@@ -23,17 +23,18 @@ export default function GitHubRepos({ repos }: Props) {
             delay: i * 0.05,
             ease: [0.16, 1, 0.3, 1],
           }}
+          className="min-w-0"
         >
           <a
             href={repo.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group block h-full rounded-lg border border-border bg-bg-tertiary/30 p-4 hover:border-accent/40 transition-colors"
+            className="group block h-full overflow-hidden rounded-lg border border-border bg-bg-tertiary/30 p-4 hover:border-accent/40 transition-colors"
           >
             <div className="flex items-start justify-between gap-3">
-              <h3 className="font-mono text-sm text-text-primary group-hover:text-accent transition-colors flex items-center gap-2">
+              <h3 className="font-mono text-sm text-text-primary group-hover:text-accent transition-colors flex items-center gap-2 min-w-0">
                 <GithubIcon size={14} className="shrink-0" />
-                {repo.name}
+                <span className="truncate">{repo.name}</span>
               </h3>
               {repo.stargazerCount > 0 && (
                 <span className="font-mono text-xs text-text-tertiary inline-flex items-center gap-1 shrink-0">
@@ -43,7 +44,7 @@ export default function GitHubRepos({ repos }: Props) {
               )}
             </div>
             {repo.description && (
-              <p className="mt-2 text-xs text-text-secondary leading-relaxed line-clamp-3">
+              <p className="mt-2 text-xs text-text-secondary leading-relaxed line-clamp-3 break-words [overflow-wrap:anywhere]">
                 {repo.description}
               </p>
             )}
