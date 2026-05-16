@@ -3,6 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
+  # Weekly rebuild so the GitHub contribution heatmap and top-starred repos
+  # stay fresh without needing a code push. Mondays 05:00 UTC (~02:00 ART).
+  schedule:
+    - cron: "0 5 * * 1"
   workflow_dispatch:
 
 permissions:
